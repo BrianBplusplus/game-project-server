@@ -7,6 +7,6 @@ const Room = db.define("room", {
 });
 
 User.belongsTo(Room);
-// Room.hasMany(User);
+Room.hasMany(User);
 
 module.exports = Room;
