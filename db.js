@@ -9,11 +9,6 @@ const syncDatabase = async () => {
   try {
     await db.sync({ force: false });
     console.log("Database connected");
-
-    // const Category = require("./gameData/category/model");
-    // const Title = require("./gameData/category/model");
-    // const checkAndAddData = require("./gameData/initalData");
-    // checkAndAddData();
   } catch (error) {
     console.error(error);
   }

@@ -14,6 +14,7 @@ app.use(userRouter);
 
 const Category = require("./gameData/category/model");
 const Title = require("./gameData/title/model");
+const Room = require("./room/model");
 const checkAndAddData = require("./gameData/initalData");
 checkAndAddData();
 
