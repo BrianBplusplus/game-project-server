@@ -5,8 +5,20 @@ const dbUrl =
 
 const db = new Sequelize(dbUrl);
 
-db.sync({ force: false })
-  .then(() => console.log("Database connected"))
-  .catch(err => console.error(err));
+const syncDatabase = async () => {
+  try {
+    await db.sync({ force: false });
+    console.log("Database connected");
+
+    // const Category = require("./gameData/category/model");
+    // const Title = require("./gameData/category/model");
+    // const checkAndAddData = require("./gameData/initalData");
+    // checkAndAddData();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+syncDatabase();
 
 module.exports = db;

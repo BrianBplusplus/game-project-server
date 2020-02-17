@@ -15,5 +15,9 @@ app.use(userRouter);
 const Category = require("./gameData/category/model");
 const Title = require("./gameData/title/model");
 const checkAndAddData = require("./gameData/initalData");
+checkAndAddData();
+
+const titleRouter = require("./gameData/title/router");
+app.use(titleRouter);
 
 app.listen(port, () => `Listening on port ${port}`);

@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const Sequelize = require("sequelize");
 const Title = require("./model");
 const Category = require("../category/model");
 
@@ -8,9 +9,9 @@ router.get("/title/random", async (request, response, next) => {
   try {
     const randomTitle = await Title.findOne({
       include: [{ model: Category }],
-      order: "random()"
+      order: [[Sequelize.fn("RANDOM")]]
     });
-    return response.json(randomTitle);
+    return response.json(randomTitle.dataValues);
   } catch (error) {
     next(error);
   }

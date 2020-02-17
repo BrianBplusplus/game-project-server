@@ -11,6 +11,7 @@ const checkAndAddData = async () => {
     }
     await addCategoryData();
     await addTitleData();
+    console.log("Initial game data added");
   } catch (error) {
     console.error(error);
   }
@@ -31,7 +32,5 @@ const addTitleData = () => {
     { name: "testTitle3", categoryId: 2 }
   ]);
 };
-
-checkAndAddData();
 
 module.exports = checkAndAddData;
