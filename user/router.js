@@ -5,7 +5,7 @@ const { toJWT } = require("../authentication/jwt");
 
 const router = new Router();
 
-router.post("/user", async (request, response, next) => {
+router.post("/signup", async (request, response, next) => {
   try {
     const { email, password, userName } = request.body;
 

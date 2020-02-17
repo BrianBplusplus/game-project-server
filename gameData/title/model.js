@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const db = require("../db");
+const db = require("../../db");
 const Category = require("../category/model");
 
 const Title = db.define("title", {
@@ -7,6 +7,5 @@ const Title = db.define("title", {
 });
 
 Title.belongsTo(Category);
-Category.hasMany(Title);
 
 module.exports = Title;

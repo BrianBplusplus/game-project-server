@@ -12,7 +12,8 @@ app.use(jsonMiddleware);
 const userRouter = require("./user/router");
 app.use(userRouter);
 
-require("./title/model");
-require("./category/model");
+const Category = require("./gameData/category/model");
+const Title = require("./gameData/title/model");
+const checkAndAddData = require("./gameData/initalData");
 
 app.listen(port, () => `Listening on port ${port}`);
