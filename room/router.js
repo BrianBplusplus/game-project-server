@@ -8,6 +8,7 @@ function factory(stream) {
 
   router.post("/room", async (request, response, next) => {
     try {
+      console.log(request);
       const newRoom = await Room.create(request.body.name);
       const room = await Room.findByPk(newRoom.id, {
         include: [User]
