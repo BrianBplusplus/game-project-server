@@ -33,21 +33,24 @@ function factory(stream) {
     "/room/join",
     authenticationMiddleware,
     async (request, response, next) => {
+      const { roomId } = request.body;
       try {
         const updatedUser = await User.update(
-          { roomId: request.body.roomId },
+          { roomId },
           { where: { id: request.user.id }, returning: true, plain: true }
         );
 
+        const updatedRoom = await Room.findByPk(roomId);
+
         const action = {
           type: "JOIN_ROOM",
-          payload: updatedUser
+          payload: updatedRoom
         };
 
         const json = JSON.stringify(action);
-
         stream.send(json);
-        response.send(updatedUser);
+
+        response.send(updatedRoom);
       } catch (error) {
         next(error);
       }
