@@ -47,7 +47,7 @@ app.get("/stream", async (request, response, next) => {
 const roomRouter = roomFactory(stream);
 app.use(roomRouter);
 
-const messageRouter = messagefactory(stream);
+const messageRouter = messageFactory(stream);
 app.use(messageRouter);
 
 app.listen(port, () => `Listening on port ${port}`);
