@@ -8,8 +8,8 @@ function factory(stream) {
 
   router.post("/room", async (request, response, next) => {
     try {
-      console.log(request);
-      const newRoom = await Room.create(request.body.name);
+      console.log(request.body.name);
+      const newRoom = await Room.create({ name: request.body.name });
       const room = await Room.findByPk(newRoom.id, {
         include: [User]
       });
@@ -22,7 +22,7 @@ function factory(stream) {
       const json = JSON.stringify(action);
 
       stream.send(json);
-      response.send(room);
+      response.send(json);
     } catch (error) {
       next(error);
     }
