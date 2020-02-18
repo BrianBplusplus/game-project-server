@@ -1,6 +1,7 @@
 const express = require("express");
 const Room = require("./model");
 const User = require("../user/model");
+const authenticationMiddleware = require("../authentication/middleware");
 
 function factory(stream) {
   const { Router } = express;
@@ -27,6 +28,29 @@ function factory(stream) {
       next(error);
     }
   });
+
+  router.put(
+    "/room/join",
+    authenticationMiddleware,
+    async (request, response, next) => {
+      try {
+        const updatedUser = await User.update(
+          { roomId: request.body.roomId },
+          { where: { id: request.user.id }, returning: true, plain: true }
+        );
+
+        // const action = {
+        //   type: "JOINED_ROOM",
+        //   payload: room
+        // };
+
+        response.send(updatedUser);
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
+
   return router;
 }
 
