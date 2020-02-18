@@ -40,7 +40,9 @@ function factory(stream) {
           { where: { id: request.user.id }, returning: true, plain: true }
         );
 
-        const updatedRoom = await Room.findByPk(roomId);
+        const updatedRoom = await Room.findByPk(roomId, {
+          include: [User]
+        });
 
         const action = {
           type: "JOIN_ROOM",
