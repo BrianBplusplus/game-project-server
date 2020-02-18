@@ -41,7 +41,7 @@ function factory(stream) {
 
         // const action = {
         //   type: "JOINED_ROOM",
-        //   payload: room
+        //   payload: //
         // };
 
         response.send(updatedUser);
