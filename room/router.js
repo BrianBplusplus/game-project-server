@@ -39,11 +39,14 @@ function factory(stream) {
           { where: { id: request.user.id }, returning: true, plain: true }
         );
 
-        // const action = {
-        //   type: "JOINED_ROOM",
-        //   payload: //
-        // };
+        const action = {
+          type: "JOIN_ROOM",
+          payload: updatedUser
+        };
 
+        const json = JSON.stringify(action);
+
+        stream.send(json);
         response.send(updatedUser);
       } catch (error) {
         next(error);
