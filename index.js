@@ -3,6 +3,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 const Sse = require("json-sse");
 const roomFactory = require("./room/router");
+const messageFactory = require("./message/router");
 
 const cors = require("cors");
 const corsMiddleware = cors();
@@ -45,5 +46,8 @@ app.get("/stream", async (request, response, next) => {
 
 const roomRouter = roomFactory(stream);
 app.use(roomRouter);
+
+const messageRouter = messagefactory(stream);
+app.use(messageRouter);
 
 app.listen(port, () => `Listening on port ${port}`);
