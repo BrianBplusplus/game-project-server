@@ -1,6 +1,7 @@
 const express = require("express");
 const Room = require("./model");
 const User = require("../user/model");
+const Message = require("../message/model");
 const authenticationMiddleware = require("../authentication/middleware");
 
 function factory(stream) {
@@ -12,7 +13,7 @@ function factory(stream) {
       console.log(request.body.name);
       const newRoom = await Room.create({ name: request.body.name });
       const room = await Room.findByPk(newRoom.id, {
-        include: [User]
+        include: [User, Message] //I edited this, if it breaks looks here
       });
 
       const action = {
