@@ -24,7 +24,7 @@ function factory(stream) {
 
       stream.send(json);
 
-      response.send(message);
+      response.send(rooms);
     } catch (error) {
       next(error);
     }
