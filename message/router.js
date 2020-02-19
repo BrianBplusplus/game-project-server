@@ -8,10 +8,10 @@ function factory(stream) {
 
   router.post("/message", async function(request, response, next) {
     try {
-      const { body } = request;
-      const { text, channelId } = body;
-      const entity = { text, channelId };
-      const message = await Message.create(entity);
+      console.log(request.body.message);
+      const newMessage = await Message.create({
+        message: request.body.message
+      });
 
       const rooms = await Room.findAll({ include: [Message] });
 
@@ -24,7 +24,7 @@ function factory(stream) {
 
       stream.send(json);
 
-      response.send(message);
+      response.send(rooms);
     } catch (error) {
       next(error);
     }
