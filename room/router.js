@@ -42,7 +42,7 @@ function factory(stream) {
         );
 
         const updatedRoom = await Room.findByPk(roomId, {
-          include: [User]
+          include: [User, Message]
         });
 
         const action = {
