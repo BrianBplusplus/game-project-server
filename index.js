@@ -25,11 +25,12 @@ const titleRouter = require("./gameData/title/router");
 app.use(titleRouter);
 
 const User = require("./user/model");
+const Message = require("./message/model");
 
 const stream = new Sse();
 app.get("/stream", async (request, response, next) => {
   try {
-    const rooms = await Room.findAll({ include: [User] });
+    const rooms = await Room.findAll({ include: [User, Message] });
 
     const action = {
       type: "ALL_ROOMS",
