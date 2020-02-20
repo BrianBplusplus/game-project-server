@@ -14,7 +14,7 @@ function factory(stream) {
       console.log(request.body.name);
       const newRoom = await Room.create({ name: request.body.name });
       const room = await Room.findByPk(newRoom.id, {
-        include: [User, Message, DrawingLines] //I edited this, if it breaks looks here
+        include: [User, Message] //I edited this, if it breaks looks here , DrawingLines
       });
 
       const action = {
