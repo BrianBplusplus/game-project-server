@@ -11,7 +11,8 @@ function factory(stream) {
     try {
       console.log(request.body.message);
       const newMessage = await Message.create({
-        message: request.body.message
+        message: request.body.message,
+        roomId: request.body.roomId
       });
 
       const rooms = await Room.findAll({ include: [User, Message] });
