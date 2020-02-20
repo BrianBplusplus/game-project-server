@@ -43,7 +43,7 @@ function factory(stream) {
         );
 
         const updatedRoom = await Room.findByPk(roomId, {
-          include: [User, Message, DrawingLines]
+          include: [User, Message] // , DrawingLines
         });
 
         const action = {
@@ -61,15 +61,32 @@ function factory(stream) {
     }
   );
 
-  router.delete("/room", async (request, response, next) => {
-    const { roomId } = request.body;
+  router.delete(
+    "/room",
+    // authenticationMiddleware,
+    async (request, response, next) => {
+      const { roomId } = request.body;
 
-    try {
-      await Room.destroy({ where: { id: roomId } });
-    } catch (error) {
-      next(error);
+      try {
+        await DrawingLines.destroy({ where: { roomId: roomId } });
+
+        await Message.destroy({ where: { roomId: roomId } });
+
+        await Room.destroy({ where: { id: roomId } });
+
+        /*    ------TODO-------
+        const action = {
+          type: "DELETE_ROOM"
+        };
+
+        const json = JSON.stringify(action);
+        stream.send(json);
+        */
+      } catch (error) {
+        next(error);
+      }
     }
-  });
+  );
 
   return router;
 }
