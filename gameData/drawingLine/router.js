@@ -1,13 +1,13 @@
 const express = require("express");
-const Canvas = require("./model");
+const DrawingLine = require("./model");
 
 function factory(stream) {
   const { Router } = express;
   const router = Router();
 
-  router.post("/canvas", async (request, response, next) => {
+  router.post("/drawing", async (request, response, next) => {
     try {
-      const newDrawing = await Canvas.create(request.body);
+      const newDrawing = await DrawingLine.create(request.body);
 
       // response.send(newDrawing);
       // const room = await Room.findByPk(newRoom.id, {
