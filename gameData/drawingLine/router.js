@@ -1,5 +1,8 @@
 const express = require("express");
 const DrawingLine = require("./model");
+const Room = require("../../room/model");
+const User = require("../../user/model");
+const Message = require("../../message/model");
 
 function factory(stream) {
   const { Router } = express;
@@ -9,20 +12,19 @@ function factory(stream) {
     try {
       const newDrawing = await DrawingLine.create(request.body);
 
-      // response.send(newDrawing);
-      // const room = await Room.findByPk(newRoom.id, {
-      //   include: [User]
-      // });
+      const rooms = await Room.findAll({
+        include: [User, Message, DrawingLine]
+      });
 
-      // const action = {
-      //   type: "ONE_ROOM",
-      //   payload: room
-      // };
+      const action = {
+        type: "ALL_ROOMS",
+        payload: rooms
+      };
 
-      // const json = JSON.stringify(action);
+      const json = JSON.stringify(action);
 
-      // stream.send(json);
-      response.send("hi");
+      stream.send(json);
+      response.send(rooms);
     } catch (error) {
       next(error);
     }

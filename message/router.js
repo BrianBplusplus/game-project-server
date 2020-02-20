@@ -2,6 +2,7 @@ const express = require("express");
 const Message = require("./model");
 const Room = require("../room/model");
 const User = require("../user/model");
+const DrawingLine = require("../gameData/drawingLine/model");
 
 function factory(stream) {
   const { Router } = express;
@@ -14,7 +15,9 @@ function factory(stream) {
         message: request.body.message
       });
 
-      const rooms = await Room.findAll({ include: [User, Message] });
+      const rooms = await Room.findAll({
+        include: [User, Message, DrawingLine]
+      });
 
       const action = {
         type: "ALL_ROOMS",
