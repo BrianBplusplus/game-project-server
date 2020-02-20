@@ -11,6 +11,7 @@ const Room = db.define("room", {
 User.belongsTo(Room);
 Message.belongsTo(Room);
 DrawingLine.belongsTo(Room);
+DrawingLine.belongsTo(User);
 Room.hasMany(User);
 Room.hasMany(Message);
 Room.hasMany(DrawingLine);
