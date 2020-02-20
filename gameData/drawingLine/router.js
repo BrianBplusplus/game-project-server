@@ -1,20 +1,16 @@
 const express = require("express");
-const Message = require("./model");
-const Room = require("../room/model");
-const User = require("../user/model");
-const DrawingLine = require("../gameData/drawingLine/model");
+const DrawingLine = require("./model");
+const Room = require("../../room/model");
+const User = require("../../user/model");
+const Message = require("../../message/model");
 
 function factory(stream) {
   const { Router } = express;
   const router = Router();
 
-  router.post("/message", async function(request, response, next) {
+  router.post("/drawing", async (request, response, next) => {
     try {
-      console.log(request.body.message);
-      const newMessage = await Message.create({
-        message: request.body.message,
-        roomId: request.body.roomId
-      });
+      const newDrawing = await DrawingLine.create(request.body);
 
       const rooms = await Room.findAll({
         include: [User, Message, DrawingLine]
@@ -28,7 +24,6 @@ function factory(stream) {
       const json = JSON.stringify(action);
 
       stream.send(json);
-
       response.send(rooms);
     } catch (error) {
       next(error);

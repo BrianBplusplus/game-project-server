@@ -51,8 +51,8 @@ app.use(roomRouter);
 const messageRouter = messageFactory(stream);
 app.use(messageRouter);
 
-const canvasFactory = require("./gameData/canvas/router");
-const canvasRouter = canvasFactory(stream);
-app.use(canvasRouter);
+const drawingLineFactory = require("./gameData/drawingLine/router");
+const drawingLineRouter = drawingLineFactory(stream);
+app.use(drawingLineRouter);
 
 app.listen(port, () => `Listening on port ${port}`);

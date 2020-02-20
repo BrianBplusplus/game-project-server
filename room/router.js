@@ -2,6 +2,7 @@ const express = require("express");
 const Room = require("./model");
 const User = require("../user/model");
 const Message = require("../message/model");
+const DrawingLines = require("../room/model");
 const authenticationMiddleware = require("../authentication/middleware");
 
 function factory(stream) {
@@ -13,7 +14,7 @@ function factory(stream) {
       console.log(request.body.name);
       const newRoom = await Room.create({ name: request.body.name });
       const room = await Room.findByPk(newRoom.id, {
-        include: [User, Message] //I edited this, if it breaks looks here
+        include: [User, Message, DrawingLines] //I edited this, if it breaks looks here
       });
 
       const action = {
@@ -42,7 +43,7 @@ function factory(stream) {
         );
 
         const updatedRoom = await Room.findByPk(roomId, {
-          include: [User, Message]
+          include: [User, Message, DrawingLines]
         });
 
         const action = {
