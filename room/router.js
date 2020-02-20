@@ -60,6 +60,16 @@ function factory(stream) {
     }
   );
 
+  router.delete("/room", async (request, response, next) => {
+    const { roomId } = request.body;
+
+    try {
+      await Room.destroy({ where: { id: roomId } });
+    } catch (error) {
+      next(error);
+    }
+  });
+
   return router;
 }
 
