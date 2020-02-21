@@ -7,7 +7,7 @@ const db = new Sequelize(dbUrl);
 
 const syncDatabase = async () => {
   try {
-    await db.sync({ force: process.env.FORCE || false });
+    await db.sync({ force: process.env.FORCE || true });
     console.log("Database connected");
   } catch (error) {
     console.error(error);
