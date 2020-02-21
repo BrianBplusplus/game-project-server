@@ -39,6 +39,27 @@ function factory(stream) {
     }
   );
 
+  router.delete(
+    "/drawing",
+    // authenticationMiddleware,
+    async (request, response, next) => {
+      const { roomId } = request.body;
+
+      try {
+        await DrawingLine.destroy({ where: { roomId: roomId } });
+
+        const action = {
+          type: "DELETE_CANVAS"
+        };
+
+        const json = JSON.stringify(action);
+        stream.send(json);
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
+
   return router;
 }
 
