@@ -2,7 +2,7 @@ const express = require("express");
 const Room = require("./model");
 const User = require("../user/model");
 const Message = require("../message/model");
-const DrawingLines = require("../room/model");
+const DrawingLines = require("../gameData/drawingLine/model");
 const authenticationMiddleware = require("../authentication/middleware");
 
 function factory(stream) {
@@ -74,14 +74,12 @@ function factory(stream) {
 
         await Room.destroy({ where: { id: roomId } });
 
-        /*    ------TODO-------
         const action = {
           type: "DELETE_ROOM"
         };
 
         const json = JSON.stringify(action);
         stream.send(json);
-        */
       } catch (error) {
         next(error);
       }
