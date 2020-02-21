@@ -1,8 +1,8 @@
 const express = require("express");
-const DrawingLine = require("./model");
 const Room = require("../../room/model");
-const User = require("../../user/model");
 const Message = require("../../message/model");
+const User = require("../../user/model");
+const DrawingLine = require("./model");
 const authenticationMiddleware = require("../../authentication/middleware");
 
 function factory(stream) {
@@ -15,8 +15,9 @@ function factory(stream) {
     async (request, response, next) => {
       try {
         const newDrawing = await DrawingLine.create({
-          ...request.body,
-          userId: request.user.dataValues.id
+          data: request.body.data,
+          color: request.body.color,
+          roomId: request.body.roomId
         });
 
         const rooms = await Room.findAll({
@@ -32,6 +33,27 @@ function factory(stream) {
 
         stream.send(json);
         response.send(rooms);
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
+
+  router.delete(
+    "/drawing",
+    // authenticationMiddleware,
+    async (request, response, next) => {
+      const { roomId } = request.body;
+
+      try {
+        await DrawingLine.destroy({ where: { roomId: roomId } });
+
+        const action = {
+          type: "DELETE_CANVAS"
+        };
+
+        const json = JSON.stringify(action);
+        stream.send(json);
       } catch (error) {
         next(error);
       }

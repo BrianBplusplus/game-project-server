@@ -1,6 +1,6 @@
 const express = require("express");
-const Message = require("./model");
 const Room = require("../room/model");
+const Message = require("./model");
 const User = require("../user/model");
 const DrawingLine = require("../gameData/drawingLine/model");
 
