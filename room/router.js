@@ -66,16 +66,19 @@ function factory(stream) {
     // authenticationMiddleware,
     async (request, response, next) => {
       const { roomId } = request.body;
-
+      console.log(request.body);
       try {
         await DrawingLines.destroy({ where: { roomId: roomId } });
-
         await Message.destroy({ where: { roomId: roomId } });
-
         await Room.destroy({ where: { id: roomId } });
 
+        const rooms = await Room.findAll({
+          include: [User, Message]
+        });
+
         const action = {
-          type: "DELETE_ROOM"
+          type: "DELETE_ROOM",
+          payload: rooms
         };
 
         const json = JSON.stringify(action);
@@ -88,5 +91,5 @@ function factory(stream) {
 
   return router;
 }
-
+//
 module.exports = factory;
